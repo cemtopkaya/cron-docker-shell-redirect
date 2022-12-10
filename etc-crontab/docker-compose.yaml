@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  ccc:
+    container_name: ccc
+    volumes:
+      - ./conf:/etc/crontab
+      - ./ilk.sh:/root/ilk.sh
+      - ./iki.sh:/root/iki.sh
+    image: cron:rsyslog
+    command: cron -f
