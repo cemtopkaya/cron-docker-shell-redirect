@@ -1,5 +1,13 @@
 version: "3.8"
 
+networks:
+  netlog:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
+
 services:
   kaynak:
     container_name: originator # Günlük üretene ingiliçce originator diyolla
@@ -15,7 +23,10 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "http://loki:3100/loki/api/v1/push"
+        loki-url: "http://10.5.0.3:3100/loki/api/v1/push"
+    networks:
+      netlog:
+        ipv4_address: 10.5.0.2
 
 
   # Loki günlük toplayıcısı
@@ -26,6 +37,9 @@ services:
     ports:
       - 3100:3100 
     image: grafana/loki
+    networks:
+      netlog:
+        ipv4_address: 10.5.0.3
 
 
   # will be available at http://127.0.0.1:3000
@@ -33,6 +47,9 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana:9.2.2
+    networks:
+      netlog:
+        ipv4_address: 10.5.0.4
     ports:
       - "3000:3000"
     volumes:
