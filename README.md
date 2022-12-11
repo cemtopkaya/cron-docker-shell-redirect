@@ -1,7 +1,7 @@
 # Neler Yapıyoruz Böyle :)
 
 Aşağıdaki bilgilerin biraz daha tafsilatlısı (ayrıntılısı) için:
-> [Dockerfile ve rsyslog ile cron nasıl çalışıyor açıklamasını burada bulabilirsiniz](./etc-crontab/Readme-Dockerfile.md)
+> [Dockerfile ve rsyslog ile cron nasıl çalışıyor açıklamasını burada bulabilirsiniz](./etc-crontab/README.md)
 
 ### Yapılacaklar
 
