@@ -49,12 +49,12 @@ Loki sunucusuna günlükleri yönlendirmek için LOKI sürcüsünü eklenti olar
 $ docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
 ```
 
-Originator ayaklandıralım:
+Sürücünün takma adını (alias) "loki" diye kaydettik!
+Originator ayaklandıralım ve günlüklerin promtail ile çekilmesi (pull) yerine log-driver ile basılmasını sağlayalım:
 ```shell
 $ docker run -d --name ping \
       --log-driver=loki \
-      --log-opt loki-url="https://<user_id>:<password>@logs-us-west1.grafana.net/loki/api/v1/push" \
-      --log-opt tag="etiketim" \
+      --log-opt loki-url="http://host.docker.internal:3100/loki/api/v1/push" \
       --log-opt loki-retries=5 \
       --log-opt loki-batch-size=400 \
       alpine ping 127.0.0.1
@@ -63,3 +63,11 @@ $ docker run -d --name ping \
 ---
 
 ### Grafana Sunucusunu Ayaklandıralım
+
+Önce LOKI'yi Grafana'ya `Data Source` olarak ekleyelim. Bunun için tüm konteynerlerin çalıştığı bilgisayarın IP adresini kullanacağız. Ayrıca LOKI 3100 portunda çalıştığı için: `http://192.168.57.85:3100`
+
+![image](https://user-images.githubusercontent.com/261946/206922274-45219a14-d99f-4540-b2f6-8368ae27afc0.png)
+
+Günlükleri görmek için `EXPLORE` içinde Loki veri kaynağına bakalım:
+
+![image](https://user-images.githubusercontent.com/261946/206922649-cf093660-9cda-4bd7-9f54-9e1ee1ae1215.png)
