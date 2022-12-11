@@ -6,11 +6,12 @@ services:
     volumes:
       - ./kaynak/cron-tablom:/etc/cron.d/cron-tablom
       - ./kaynak/calistir.sh:/root/calistir.sh
+      - ../etc-crontab/etc/rsyslog.d/50-default.conf:/etc/rsyslog.d/50-default.conf
     build: 
       context: ../
       dockerfile: Dockerfile
     image: cemt/cron-rsyslog
-    command: tail -f /dev/null
+    command: /etc/init.d/rsyslog start & /etc/init.d/cron start && tail -f /dev/null
     logging:
       driver: loki
       options:
