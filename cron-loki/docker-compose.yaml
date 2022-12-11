@@ -14,6 +14,7 @@ services:
     volumes:
       - ./kaynak/cron-tablom:/etc/cron.d/cron-tablom
       - ./kaynak/calistir.sh:/root/calistir.sh
+      - ./kaynak/mirror.sh:/root/mirror.sh
       - ../etc-crontab/etc/rsyslog.d/50-default.conf:/etc/rsyslog.d/50-default.conf
     build: 
       context: ../
@@ -41,9 +42,9 @@ services:
     # json-file sürücüsüyle en çok 10MB dosya büyüklüğüne ulaşacak 5 günlük dosyası saklar
     logging:
       driver: "json-file"
-        options:
-          max-size: "10m"
-          max-file: "5"
+      options:
+        max-size: "10m"
+        max-file: "5"
     networks:
       netlog:
         ipv4_address: 10.5.0.3
