@@ -17,7 +17,7 @@ services:
         loki-url: "https://admin:admin@loki/loki/api/v1/push"
 
 
-# Loki günlük toplayıcısı
+  # Loki günlük toplayıcısı
   loki:
     container_name: loki-collector
     volumes:
@@ -25,3 +25,16 @@ services:
     ports:
       - 3100:3100 
     image: grafana/loki
+
+
+  # will be available at http://127.0.0.1:3000
+  # default credentials: admin/admin
+  grafana:
+    image: grafana/grafana:9.2.2
+    ports:
+      - "3000:3000"
+    volumes:
+      # directory must be created first, with uid:gid 472:472
+      - ./grafana/lib:/var/lib/grafana
+      # automatically configure the loki datasource
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
