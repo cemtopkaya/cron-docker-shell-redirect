@@ -11,7 +11,7 @@ services:
       context: ../
       dockerfile: Dockerfile
     image: cemt/cron-rsyslog
-    command: /etc/init.d/rsyslog start & /etc/init.d/cron start && tail -f /dev/null
+    command: sh -c "service rsyslog start && service cron start && tail -f /dev/null"
     logging:
       driver: loki
       options:
