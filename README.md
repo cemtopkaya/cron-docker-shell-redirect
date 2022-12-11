@@ -8,10 +8,10 @@ Aşağıdaki bilgilerin biraz daha tafsilatlısı (ayrıntılısı) için:
 - [x] cron, rsyslog Nedir ve nasıl çalışır?
 - [x] PID 1 nedir ve yönlendirme (redirection) nasıl çalışıyor?
 - [x] Konteynerin günlüklerinde zamanlanmış görevlerin çıktılarını görelim
-- [ ] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim 
-  - [ ] Günlükleri toplayan bir sunucu ayaklandıralım
-  - [ ] Konteynerin günlüklerini bu sunuya yönlendirelim 
-  - [ ] Günlükleri gösterecek şekilde Grafana'yı ayaklandıralım :tada:
+- [x] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim 
+  - [x] Günlükleri toplayan bir sunucu ayaklandıralım
+  - [x] Konteynerin günlüklerini bu sunuya yönlendirelim 
+  - [x] Günlükleri gösterecek şekilde Grafana'yı ayaklandıralım :tada:
 
 
 
