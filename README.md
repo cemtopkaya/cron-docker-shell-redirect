@@ -41,4 +41,4 @@ Ne şirin değil mi? :)
 
 ## Docker Günlüklerini Harici Sunucuda Toplamak ve Görüntülemek
 
-[Sonraki...](cron-loki/README.md)
+[Sonraki...](../cron-loki/README.md)
