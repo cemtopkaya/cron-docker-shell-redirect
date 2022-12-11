@@ -7,6 +7,8 @@ services:
       - ./conf:/etc/crontab
       - ./ilk.sh:/root/ilk.sh
       - ./iki.sh:/root/iki.sh
+      # rsyslog'un cron servisinin günlüklerini alması için:
+      - ./etc/rsyslog.d/50-default.conf:/etc/rsyslog.d/50-default.conf
     build:
       context: ../
       dockerfile: Dockerfile
