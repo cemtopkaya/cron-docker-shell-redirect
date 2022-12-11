@@ -30,11 +30,12 @@ services:
   # will be available at http://127.0.0.1:3000
   # default credentials: admin/admin
   grafana:
+    container_name: loki
     image: grafana/grafana:9.2.2
     ports:
       - "3000:3000"
     volumes:
       # directory must be created first, with uid:gid 472:472
-      - ./grafana/lib:/var/lib/grafana
+      #- ./grafana/lib:/var/lib/grafana
       # automatically configure the loki datasource
       - ./grafana/provisioning/:/etc/grafana/provisioning/
