@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  kaynak:
+    container_name: originator # Günlük üretene ingiliçce originator diyolla
+    volumes:
+      - ./kaynak/conf:/etc/crontab
+      - ./kaynak/ilk.sh:/root/ilk.sh
+      - ./kaynak/iki.sh:/root/iki.sh
+    image: cron:rsyslog
+    command: cron -f
+
+# Loki günlük toplayıcısı
+  loki:
+    container_name: loki-collector
+    volumes:
+      - ./loki/config.yaml:/etc/loki/local-config.yaml
+    ports:
+      - 3100:3100 
+    image: grafana/loki
