@@ -64,6 +64,14 @@ $ docker run -d --name ping \
 
 ### Grafana Sunucusunu Ayaklandıralım
 
+```shell
+docker run -d --user $(id -u) \
+     -v "./grafana/lib:/var/lib/grafana" \
+     -v ./grafana/provisioning/:/etc/grafana/provisioning/ \
+     -p 3000:3000 \
+     grafana/grafana:9.2.2
+```
+
 Önce LOKI'yi Grafana'ya `Data Source` olarak ekleyelim. Bunun için tüm konteynerlerin çalıştığı bilgisayarın IP adresini kullanacağız. Ayrıca LOKI 3100 portunda çalıştığı için: `http://192.168.57.85:3100`
 
 ![image](https://user-images.githubusercontent.com/261946/206922274-45219a14-d99f-4540-b2f6-8368ae27afc0.png)
