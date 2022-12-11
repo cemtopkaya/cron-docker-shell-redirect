@@ -11,6 +11,11 @@ services:
       dockerfile: Dockerfile
     image: cemt/cron-rsyslog
     command: tail -f /dev/null
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://admin:admin@loki/loki/api/v1/push"
+
 
 # Loki günlük toplayıcısı
   loki:
