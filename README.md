@@ -56,3 +56,23 @@ Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
 `**/var/spool/cron/{root,user1,cnrusr..}**` kullanıcılar tarafından tanımlanan crontab’ları depolamak için dizin.
 
 `**/etc/cron.d/**` sistem crontab’larını depolamak için dizindir. Bu dizindeki dosyaların uzantısı olmaksızın ve son satırlarının yeni ve boş bir satırla bitmesi gerektiğini unutmayın.
+
+---
+
+### Konsol Çıktısını Docker Günlüklerinde Görüntülemek
+
+`echo merhaba > /proc/1/fd/1 2>/proc/1/fd/2` ile şunu murad ediyoruz:
+- Docker konteynerinde proses ID'si 1 olan uygulamanın konsol çıktılarını (stdout) görürüz.
+- Eğer PID 1 olmayan proseslerin çıktısını da `docker logs <konteyner>` ile görmek istersek.
+  * Programın çıktısını 1 ID'li proses (`/proc/1/`) 
+  * Linux'te her şey dosya olduğu için konsol çıktısını tutan (`stdOut`) file descriptor 1'dir (`/fd/1`)
+  * Hata çıktıları (`stdErr`) da başka bir dosyada tutulur ve file decriptor ID'si 2  (`/fd/2`)
+- Buna göre PID 1'in çıktılarına yönlendirmek için normal çıktıları (stdout): ` > /proc/1/fd/1`
+- Hata çıktılarını: `2>/proc/1/fd/2`
+
+```shell
+#!/bin/bash
+
+json='{"tag": "iki", "mesaj": "tes tags_at_commit sometags project"}'
+while(true); do sleep 1; echo "$json"  > /proc/1/fd/1 2>/proc/1/fd/2;  done;
+```
