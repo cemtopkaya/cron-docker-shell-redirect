@@ -14,12 +14,12 @@ services:
     logging:
       driver: loki
       options:
-        loki-url: "https://admin:admin@loki/loki/api/v1/push"
+        loki-url: "http://loki:3100/loki/api/v1/push"
 
 
   # Loki günlük toplayıcısı
   loki:
-    container_name: loki-collector
+    container_name: loki
     volumes:
       - ./loki/config.yaml:/etc/loki/local-config.yaml
     ports:
