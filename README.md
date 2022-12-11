@@ -1,6 +1,6 @@
 # Neler Yapıyoruz Böyle :)
 
-Aşağıdaki bilgilerin biraz daha tafsilatı (ayrıntısı) için:
+Aşağıdaki bilgilerin biraz daha tafsilatlısı (ayrıntılısı) için:
 > [Dockerfile ve rsyslog ile cron nasıl çalışıyor açıklamasını burada bulabilirsiniz](./etc-crontab/Readme-Dockerfile.md)
 
 ### Yapılacaklar
@@ -8,12 +8,14 @@ Aşağıdaki bilgilerin biraz daha tafsilatı (ayrıntısı) için:
 - [x] cron, rsyslog Nedir ve nasıl çalışır?
 - [x] PID 1 nedir ve yönlendirme (redirection) nasıl çalışıyor?
 - [x] Konteynerin günlüklerinde zamanlanmış görevlerin çıktılarını görelim
-- [ ] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim :tada:
+- [ ] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim 
+  - [ ] Günlükleri toplayan bir sunucu ayaklandıralım
+  - [ ] Konteynerin günlüklerini bu sunuya yönlendirelim 
+  - [ ] Günlükleri gösterecek şekilde Grafana'yı ayaklandıralım :tada:
 
 
 
 # Ne, Nasıl ve Ne için Çalışıyor?
-
 
 `crontab -e` ile sisteme giriş yaptığımız kullanıcıya ait bir zamanlanmış görev tablosu oluşturabiliriz ki bu dosya `/var/spool/cron/crontabs/` dizininde kullanıcı adıyla oluşacaktır.
 Ama biz `/etc/cron.d/` dizininde bir dosya oluşturalım ve içine sonunda boş bir satırla bitecek şunu yazalım:
@@ -34,3 +36,48 @@ Cron'un günlük dosyasında hemen işletildiğini göreceğiz:
 ![image](https://user-images.githubusercontent.com/261946/206898364-a62b790f-ad89-4c87-97c6-65c4854d17aa.png)
 
 Ne şirin değil mi? :)
+
+---
+
+## Docker Günlüklerini Harici Sunucuda Toplamak ve Görüntülemek
+
+### Sunucuyu Ayaklandıralım
+
+Eğer günlük toplayıcımız fluentd sunucusu olacaksa:
+
+```shell
+$ docker run --rm -d --name gunluk-havuzu \
+             -p 24224:24224 \
+             -p 24224:24224/udp \
+             -v /home/cnrusr/data:/fluentd/log \
+             fluent/fluentd:v1.3-debian-1
+```
+
+Eğer Loki ile günlükleri toplayacaksak:
+
+```shell
+$ docker run -d --name=loki \
+             -v ./loki/config.yaml:/etc/loki/local-config.yaml \
+             -p 3100:3100 \
+             grafana/loki
+```
+
+### Konteyner Günlüklerini Sunucuya Yönlendirelim
+
+fluentd Sürücüsü docker il birlikte geliyor ama loki sürücüsünü eklenti olarak kurmamız gerekiyor.
+Aşağıdaki komutla alpine konteyneri ayaklanır ve `127.0.0.1:24224` adresine günlükleri basar.
+
+```shell
+$ docker run --log-driver=fluentd \
+             --log-opt fluentd-address=127.0.0.1:24224 \
+             --log-opt tag="etiket" \
+             alpine ping 127.0.0.1
+```
+
+Loki sunucusuna günlükleri yönlendirmek için LOKI sürcüsünü eklenti olarak yükleyelim:
+```shell
+$ docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+```
+
+
+### Grafana Sunucusunu Ayaklandıralım
