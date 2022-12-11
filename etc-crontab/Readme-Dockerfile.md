@@ -1,4 +1,4 @@
-# Dockerfile Uygulmaları
+# Dockerfile Uygulamaları
 
 ## cron
 Zamanlanmış görevleri çalıştıracak uygulama. Buralarda bir yerde uygulamaya dair ziyadesiyle bilgi bulabilirsiniz.
@@ -45,6 +45,18 @@ Zamanlanmış görevleri bulmak için `crontab -l` yapıp `cron.log` dosyasına 
 
 # Ne, Nasıl ve Ne için Çalışıyor?
 
-`cron` Uygulaması kurulu ancak başlatılmadığı için (`ps aux` içinde yok!) servisin durumu `[ - ]` olarak görünüyor.
+`crontab -e` ile sisteme giriş yaptığımız kullanıcıya ait bir zamanlanmış görev tablosu oluşturabiliriz ki bu dosya `/var/spool/cron/crontabs/` dizininde kullanıcı adıyla oluşacaktır.
+Ama biz `/etc/cron.d/` dizininde bir dosya oluşturalım ve içine sonunda boş bir satırla bitecek şunu yazalım:
 
-![image](https://user-images.githubusercontent.com/261946/206894533-bcafa83d-bc94-492f-bba9-2b50a3a08e20.png)
+```shell
+* * * * * root /bin/sh -c "echo selam dunya > /proc/1/fd/1 2>/proc/1/fd/2"
+
+```
+
+![image](https://user-images.githubusercontent.com/261946/206898164-c1cbdcdf-3df9-4d11-a5d1-afdda24b10d1.png)
+
+Cron'un günlük dosyasında hemen işletildiğini göreceğiz:
+
+![image](https://user-images.githubusercontent.com/261946/206898145-58fba895-7d62-4a84-b93d-2eb9a10b1876.png)
+
+
