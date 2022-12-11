@@ -30,7 +30,7 @@ services:
   # will be available at http://127.0.0.1:3000
   # default credentials: admin/admin
   grafana:
-    container_name: loki
+    container_name: grafana
     image: grafana/grafana:9.2.2
     ports:
       - "3000:3000"
