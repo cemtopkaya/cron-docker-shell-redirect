@@ -38,7 +38,7 @@ Eğer Loki'de günlükleri toplayacaksak LOKI sunucusunu ayaklandıralım:
 $ docker run -d --name=loki \
              -v ./loki/config.yaml:/etc/loki/local-config.yaml \
              -p 3100:3100 \
-             grafana/loki
+             grafana/loki:2.7.0 --config.file=/etc/loki/local-config.yaml
 ```
 
 ### Konteyner Günlüklerini Sunucuya Yönlendirelim
