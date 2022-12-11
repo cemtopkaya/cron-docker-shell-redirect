@@ -9,8 +9,8 @@ services:
     build: 
       context: ../
       dockerfile: Dockerfile
-    image: cron:rsyslog
-    command: cron -f
+    image: cemt/cron-rsyslog
+    command: tail -f /dev/null
 
 # Loki günlük toplayıcısı
   loki:
