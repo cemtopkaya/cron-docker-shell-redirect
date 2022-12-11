@@ -4,9 +4,11 @@ services:
   kaynak:
     container_name: originator # Günlük üretene ingiliçce originator diyolla
     volumes:
-      - ./kaynak/conf:/etc/crontab
-      - ./kaynak/ilk.sh:/root/ilk.sh
-      - ./kaynak/iki.sh:/root/iki.sh
+      - ./kaynak/cron-tablom:/etc/cron.d/cron-tablom
+      - ./kaynak/calistir.sh:/root/calistir.sh
+    build: 
+      context: ../
+      dockerfile: Dockerfile
     image: cron:rsyslog
     command: cron -f
 
