@@ -1,5 +1,8 @@
 # Neler Yapıyoruz Böyle :)
 
+![image](https://user-images.githubusercontent.com/261946/207039066-d4d6ec55-6951-4bc2-9162-c041ffe7dac3.png)
+
+
 Aşağıdaki bilgilerin biraz daha tafsilatlısı (ayrıntılısı) için:
 > [Dockerfile ve rsyslog ile cron nasıl çalışıyor açıklamasını burada bulabilirsiniz](./etc-crontab/README.md)
 
