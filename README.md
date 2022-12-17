@@ -42,6 +42,15 @@ Ne şirin değil mi? :)
 
 ---
 
+## crontab Dosyasının Yetkilendirmesi
+/var/log/cron.log dosyasında `INSECURE MODE (mode 0600 expected) (crontabs/root)` yazısını görünce anlıyoruz ki `/var/spool/cron/crontab/root` dosyasının yetkilendirmesinin 600 olması gerekiyor. Yani bağladığımız dosyasının `chmod 600 root-crontab` ile özelliklerinin değişmesi gerekiyor.
+
+![image](https://user-images.githubusercontent.com/261946/208244462-be787e60-3fec-4997-b2a5-3bf0f18a5daf.png)
+![image](https://user-images.githubusercontent.com/261946/208244475-060cd45a-8bed-4e46-bf08-df6ed32e8086.png)
+
+
+---
+
 ## Docker Günlüklerini Harici Sunucuda Toplamak ve Görüntülemek
 
 [Sonraki...](./cron-loki/README.md)
