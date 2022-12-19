@@ -4,11 +4,16 @@ services:
   ccc:
     container_name: ccc
     volumes:
-      - ./conf:/etc/crontab
+#      - ./conf:/etc/crontab
       - ./ilk.sh:/root/ilk.sh
       - ./iki.sh:/root/iki.sh
+
       # rsyslog'un cron servisinin günlüklerini alması için:
       - ./etc/rsyslog.d/50-default.conf:/etc/rsyslog.d/50-default.conf
+
+      # hem kullanici hem sistem crontab dosyalari
+      - ./etc/crontab:/etc/crontab
+      - ./var/spool/cron/crontabs/root:/var/spool/cron/crontabs/root
     build:
       context: ../
       dockerfile: Dockerfile
