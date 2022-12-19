@@ -2,26 +2,23 @@
 
 ![image](https://user-images.githubusercontent.com/261946/207039066-d4d6ec55-6951-4bc2-9162-c041ffe7dac3.png)
 
-
 Aşağıdaki bilgilerin biraz daha tafsilatlısı (ayrıntılısı) için:
+
 > [Dockerfile ve rsyslog ile cron nasıl çalışıyor açıklamasını burada bulabilirsiniz](./etc-crontab/README.md)
 
 ### Yapılacaklar
 
-- [x] cron, rsyslog Nedir ve nasıl çalışır?
-- [x] PID 1 nedir ve yönlendirme (redirection) nasıl çalışıyor?
-- [x] Konteynerin günlüklerinde zamanlanmış görevlerin çıktılarını görelim
-- [x] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim 
-  - [x] Günlükleri toplayan bir sunucu ayaklandıralım
-  - [x] Konteynerin günlüklerini bu sunuya yönlendirelim 
-  - [x] Günlükleri gösterecek şekilde Grafana'yı ayaklandıralım :tada:
-
-
+- [X] cron, rsyslog Nedir ve nasıl çalışır?
+- [X] PID 1 nedir ve yönlendirme (redirection) nasıl çalışıyor?
+- [X] Konteynerin günlüklerinde zamanlanmış görevlerin çıktılarını görelim
+- [X] Konteynerin günlüklerini fluentd log-driver'ı ile sunucuya yönlendirelim
+  - [X] Günlükleri toplayan bir sunucu ayaklandıralım
+  - [X] Konteynerin günlüklerini bu sunuya yönlendirelim
+  - [X] Günlükleri gösterecek şekilde Grafana'yı ayaklandıralım 🎉
 
 # Ne, Nasıl ve Ne için Çalışıyor?
 
-`crontab -e` ile sisteme giriş yaptığımız kullanıcıya ait bir zamanlanmış görev tablosu oluşturabiliriz ki bu dosya `/var/spool/cron/crontabs/` dizininde kullanıcı adıyla oluşacaktır.
-Ama biz `/etc/cron.d/` dizininde bir dosya oluşturalım ve içine sonunda boş bir satırla bitecek şunu yazalım:
+/etc/crontab dosyası sistem üzerinde geçerli ilk iş listesidir ve satırlar içinde kullanıcı adı girmeye gerek yoktur. `crontab -e `ile sisteme giriş yaptığımız kullanıcıya ait bir zamanlanmış görev tablosu oluşturabiliriz ki bu dosya `/var/spool/cron/crontabs/`dizininde kullanıcı adıyla oluşacaktır. Ama biz `/etc/cron.d/` dizininde bir dosya oluşturalım ve içine sonunda boş bir satırla bitecek şunu yazalım:
 
 ```shell
 * * * * * root /bin/sh -c "echo selam dunya > /proc/1/fd/1 2>/proc/1/fd/2"
@@ -43,11 +40,11 @@ Ne şirin değil mi? :)
 ---
 
 ## crontab Dosyasının Yetkilendirmesi
+
 /var/log/cron.log dosyasında `INSECURE MODE (mode 0600 expected) (crontabs/root)` yazısını görünce anlıyoruz ki `/var/spool/cron/crontab/root` dosyasının yetkilendirmesinin 600 olması gerekiyor. Yani bağladığımız dosyasının `chmod 600 root-crontab` ile özelliklerinin değişmesi gerekiyor.
 
 ![image](https://user-images.githubusercontent.com/261946/208244462-be787e60-3fec-4997-b2a5-3bf0f18a5daf.png)
 ![image](https://user-images.githubusercontent.com/261946/208244475-060cd45a-8bed-4e46-bf08-df6ed32e8086.png)
-
 
 ---
 
